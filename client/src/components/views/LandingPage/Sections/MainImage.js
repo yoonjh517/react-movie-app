@@ -4,10 +4,12 @@ function MainImage(props) {
   return (
     <div
       style={{
-        background: `linear-gradient(to bottom, rgba(0,0,0,0) 39%, rgba(0,0,0,0) 41%, rgba(0,0,0,0.65) 100%), url('${props.image}'), #1c1c1c`,
-        height: "500px",
-        backgroundSize: "100%, cover",
-        backgroundPosition: "center, center",
+        backgroundColor: `linear-gradient(to bottom, rgba(0,0,0,0) 39%, rgba(0,0,0,0) 41%, rgba(0,0,0,0.65) 100%)`,
+        backgroundImage: `url('${props.image}')`,
+        height: "600px",
+        backgroundSize: "100%",
+        backgroundSize: "cover",
+        backgroundPosition: "top, center",
         width: "100%",
         position: "relative",
       }}
