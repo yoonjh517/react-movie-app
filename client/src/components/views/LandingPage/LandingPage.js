@@ -8,19 +8,36 @@ import { Row } from "antd";
 function LandingPage() {
   const [Movies, setMovies] = useState([]);
   const [MainMovieImage, setMainMovieImage] = useState(null);
+  const [CurrentPage, setCurrentPage] = useState(0);
 
+  // when page loads
   useEffect(() => {
     const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
+    fetchMovies(endpoint);
+  }, []);
+
+  // for useEffect, loadmore button
+  const fetchMovies = (endpoint) => {
     fetch(endpoint)
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
 
-        setMovies([...response.results]);
+        setMovies([...Movies, ...response.results]);
         setMainMovieImage(response.results[0]); // the most popular movie for MainImage Component
+        setCurrentPage(response.page);
       });
-  }, []);
+  };
+  // for load more button
+  // when you click the button, CurrentPage + 1
+  const loadMoreItems = () => {
+    const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${
+      CurrentPage + 1
+    }`;
+
+    fetchMovies(endpoint);
+  };
 
   return (
     <div style={{ width: "100%", margin: "0" }}>
@@ -55,7 +72,7 @@ function LandingPage() {
         </Row>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <button>Load more</button>
+        <button onClick={loadMoreItems}>Load more</button>
       </div>
     </div>
   );
